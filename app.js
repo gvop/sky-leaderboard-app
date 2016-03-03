@@ -1,3 +1,4 @@
+//NPM Packages
 var express         = require('express');
 var cors            = require('cors');
 var bodyParser      = require('body-parser');
@@ -5,11 +6,13 @@ var methodOverride  = require('method-override');
 var morgan          = require('morgan');
 var mongoose        = require("mongoose");
 
-var config          = require("./db/config")
+//Linked files
 var app             = express();
+var config          = require("./db/config")
 var routes          = require('./config/routes');
 var Programme       = require("./models/programme")
 
+//Server setup
 var http            = require('http');
 var server          = http.createServer(app);
 var port            = process.env.PORT || 3000;
@@ -28,14 +31,15 @@ app.use(methodOverride(function(req, res){
   }
 }));
 
-// app.use(routes);
+app.use(routes);
 
-// Setup static files to be served from public
+// Setup static files form public folder
 app.use(express.static(__dirname + '/public'));
 
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname + "/index.html"));
 })
 
+//Start server
 server.listen(port);
 console.log('Server started on ' + port);
