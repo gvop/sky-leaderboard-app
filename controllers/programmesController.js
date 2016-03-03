@@ -1,19 +1,16 @@
 var Programme   = require('../models/programme');
 
 function programmesAdd(req, res){
-  console.log("programmesAdd")
+  var programme = new Programme(req.body);
+  console.log(programme)
+  programme.save(function(err, programme) {
+    console.log("test")
+    if (err) return res.status(500).send(err);
+    res.status(201).send(programme)
+  })
 }
 
-function programmesShow(req, res) {
-  console.log("programmesShow")
-}
-
-function programmesUpdate(req, res){
-  console.log("programmesUpdate")
-}
 
 module.exports = { 
-  programmesShow:   programmesShow,
-  programmesUpdate: programmesUpdate,
   programmesAdd: programmesAdd
 }

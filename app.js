@@ -4,7 +4,8 @@ var cors            = require('cors');
 var bodyParser      = require('body-parser');
 var methodOverride  = require('method-override');
 var morgan          = require('morgan');
-var mongoose        = require("mongoose");
+var path            = require('path');
+
 
 //Linked files
 var app             = express();
