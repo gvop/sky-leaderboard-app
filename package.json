@@ -1,0 +1,27 @@
+{
+  "name": "sky-leaderboard-app",
+  "version": "1.0.0",
+  "description": "Unattended Coding Test",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gvop/sky-leaderboard-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gvop/sky-leaderboard-app/issues"
+  },
+  "homepage": "https://github.com/gvop/sky-leaderboard-app#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.4.6",
+    "morgan": "^1.7.0"
+  }
+}
