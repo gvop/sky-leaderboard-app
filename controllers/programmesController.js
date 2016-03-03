@@ -1,6 +1,6 @@
 var Programme   = require('../models/programme');
 
-function programmesAdd(req, res){
+function programmeAdd(req, res){
   var programme = new Programme(req.body);
   programme.save(function(err, programme) {
     if (err) return res.status(500).send(err);
@@ -17,5 +17,5 @@ function programmesIndex(req, res){
 
 module.exports = { 
   programmesIndex: programmesIndex,
-  programmesAdd: programmesAdd
+  programmeAdd: programmeAdd
 }

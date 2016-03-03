@@ -4,7 +4,7 @@ var router   = express.Router();
 var programmesController         = require('../controllers/programmesController');
 
 router.route('/api/programmes/')
-  .post(programmesController.programmesAdd)
+  .post(programmesController.programmeAdd)
   .get(programmesController.programmesIndex)
 
 module.exports = router;
