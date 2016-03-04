@@ -20,8 +20,32 @@ function programmesIndex(req, res){
   });
 }
 
+function addRating(req,res ){
+  var score = parseInt(req.body.data)
+  var data = {
+    comment   : score,
+    timeStamp : new Date()
+  }
+
+  Programme.findById(req.params.id,  function(err, programme) {
+    programme.rating.push(data)
+    programme.save(function(data){
+      console.log(programme)
+      res.status(200).json({message: "You've added a comment!"});
+    });
+  });
+};
+
+function averageCalculation(){
+  console.log("averageCalc")
+}
+
+
+
+
 
 module.exports = { 
-  programmesIndex: programmesIndex,
-  programmeAdd: programmeAdd
+  programmesIndex : programmesIndex,
+  programmeAdd    : programmeAdd,
+  addRating       : addRating
 }

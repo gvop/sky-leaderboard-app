@@ -1,9 +1,48 @@
+html {
+  height: 100%;
+}
+
 body {
+  background: radial-gradient(ellipse at center,#fff 0%,#fff 30%,#e5e5eb 54%,#c9c7d1 71%);
+    background-image: radial-gradient(at 50% 50%, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 30%, rgb(229, 229, 235) 54%, rgb(201, 199, 209) 71%);
+  font-family: helvetica,arial;
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/*Navigation*/
+.nav li {
+  display: inline-block;
+}
+
+/*Stars*/
+.stars > i {
+  cursor: pointer;
+  padding: 0 .3rem 0 0;
+}
+
+/*Typo*/
+
+h1{
+  margin: 0;
+}
+
+.clear-background{
   background: white;
-  font-family: helvetica,arial
 }
 
 .card .card-title {
     font-size: 21px;
     font-weight: 300;
+}
+
+.card{
+  box-shadow: 0 0 0 0;
+  transition: box-shadow .5s ease;
+}
+
+.card:hover{
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
 }

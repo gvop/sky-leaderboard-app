@@ -8,5 +8,8 @@ router.route('/api/programmes/')
   .post(programmesController.programmeAdd)
   .get(programmesController.programmesIndex)
 
+router.route('/api/programmes/:id')
+  .put(programmesController.addRating)
+  
 module.exports = router;
 

@@ -1,8 +1,25 @@
+var rating = {}
+rating.getScore = function(score, id){
+  console.log(score + " stars have gave")
+  var url = "/api/programmes/" + id;
+  requests.ajaxReq("PUT", url, score )
+}
+
 var requests = {}
 
 requests.getReq = function(url){
   $.get( url, function( data ) {
     requests.appendProgrammes(data.programmes)
+  });
+};
+
+requests.ajaxReq = function(method,url,data){
+  $.ajax({
+    type: method,
+    url: url,
+    data: {data: data},
+    success: function(data){
+    }
   });
 };
 
@@ -17,24 +34,38 @@ requests.appendProgrammes = function(data){
       "</div>" +
       "<div class='card-content'>" +
       "<span class='card-title activator grey-text text-darken-4'>" + data[i].name + "</span>" +
+      "<div class='stars' data-id='" +
+      data[i]._id +
+      "'>" +
+      "<i class='fa fa-star-o'></i>" +
+      "<i class='fa fa-star-o'></i>" +
+      "<i class='fa fa-star-o'></i>" +
+      "<i class='fa fa-star-o'></i>" +
+      "<i class='fa fa-star-o'></i>" +
+      "</div>" +
       "</div>" +
       "</div>" +
       "</div>"
       )
   };
+  $(".stars i").on("click", function(){
+    var indexScore  = $(this).index()
+    var parent      = $(this).parent()
+    var programmeId = parent.attr('data-id')
+    var childs      = parent.children()
+    var score       = (indexScore + 1)
+
+    childs.each(function(index) {
+        if(index < score){
+          $(this).addClass('fa-star').removeClass('fa-star-o')
+        } else {
+          $(this).removeClass('fa-star-o').addClass('fa-star-o')
+        }
+    });
+    rating.getScore(score, programmeId)
+  })
 };
 
-
-
-requests.ajaxReq = function(method,url,data){
-  $.ajax({
-    type: method,
-    url: url,
-    data: {data: data},
-    success: function(data){
-    }
-  });
-};
 
 requests.readXml = function(event){
   var i = 0;
