@@ -31,7 +31,6 @@ function documentUpload(req, res){
       if(err) {
           return res.end("Error uploading file.");
       }
-      programmeAdd();
       Convert.convert();
       res.end("File is uploaded");
   });
