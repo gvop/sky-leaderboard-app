@@ -1,14 +1,17 @@
 var Programme   = require('../models/programme');
-var Convert     = require('../controllers/convertController');
 var multer      = require('multer');
 
 function programmeAdd(req, res){
-  var programme = new Programme(req.body);
-  programme.save(function(err, programme) {
-    if (err) return res.status(500).send(err);
-    res.status(201).send(programme)
-  })
-}
+  var data = req.body.data
+  console.log(req.body.data)
+  var i=0;
+  for(i;i<data.length;i++){
+    var programme = new Programme(data[i]);
+    programme.save(function(err, programme) {
+      if (err) return res.status(500).send(err);
+    })
+  };
+};
 
 function programmesIndex(req, res){
   Programme.find({}, function(err, programmes){
@@ -17,27 +20,8 @@ function programmesIndex(req, res){
   });
 }
 
-function documentUpload(req, res){
-  var storage =   multer.diskStorage({
-    destination: function (req, file, callback) {
-      callback(null, 'public/uploads/');
-    },
-    filename: function (req, file, callback) {
-      callback(null, "1j6dfG92nh6.xml");
-    }
-  });
-  var upload = multer({ storage : storage}).single('document');
-  upload(req,res,function(err) {
-      if(err) {
-          return res.end("Error uploading file.");
-      }
-      Convert.convert();
-      res.end("File is uploaded");
-  });
-}
 
 module.exports = { 
   programmesIndex: programmesIndex,
-  programmeAdd: programmeAdd,
-  documentUpload: documentUpload
+  programmeAdd: programmeAdd
 }

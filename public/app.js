@@ -2,7 +2,37 @@ var requests = {}
 
 requests.getReq = function(url){
   $.get( url, function( data ) {
-    $("h1").html( data.programmes[2].name );
+    requests.appendProgrammes(data.programmes)
+  });
+};
+
+requests.appendProgrammes = function(data){
+  var i = 0;
+  for(i;i<data.length;i++){
+    $('#programmes').append(
+      "<div class='col s4'>" +
+      "<div class='card'>" +
+      "<div class='card-image waves-effect waves-block waves-light'>" +
+      "<img class='activator' src='http://www.wired.com/wp-content/uploads/2014/04/Fargo.jpg'>" +
+      "</div>" +
+      "<div class='card-content'>" +
+      "<span class='card-title activator grey-text text-darken-4'>" + data[i].name + "</span>" +
+      "</div>" +
+      "</div>" +
+      "</div>"
+      )
+  };
+};
+
+
+
+requests.ajaxReq = function(method,url,data){
+  $.ajax({
+    type: method,
+    url: url,
+    data: {data: data},
+    success: function(data){
+    }
   });
 };
 
@@ -22,12 +52,12 @@ requests.readXml = function(event){
       }
       data.push(programme)
     };
-    console.log(data)
+    requests.ajaxReq("POST", "/api/programmes/", data)
+    requests.appendProgrammes(data)
   };
   reader.readAsText(files[0]);
+  $("#selectfile").val('');
 };
-
-
 
 requests.getReq("api/programmes");
 document.getElementById("selectfile").addEventListener("change", requests.readXml, false)

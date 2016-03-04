@@ -8,8 +8,5 @@ router.route('/api/programmes/')
   .post(programmesController.programmeAdd)
   .get(programmesController.programmesIndex)
 
-router.route('/upload')
-  .post(programmesController.documentUpload)
-
 module.exports = router;
 
