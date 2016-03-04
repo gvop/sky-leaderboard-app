@@ -6,7 +6,6 @@ var methodOverride  = require('method-override');
 var morgan          = require('morgan');
 var path            = require('path');
 
-
 //Linked files
 var app             = express();
 var config          = require("./db/config")
