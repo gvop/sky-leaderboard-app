@@ -20,6 +20,7 @@ function programmesIndex(req, res){
   });
 }
 
+
 function addRating(req,res ){
   var score = parseInt(req.body.data)
   console.log(score)

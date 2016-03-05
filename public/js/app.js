@@ -47,20 +47,29 @@ requests.sortData = function(data){
   return requests.appendProgrammes(sorted, "#leaderboard")
 }
 
-requests.addStars = function(score){
-  var childs      = $('.stars').children()
-  childs.each(function(index) {
-      if(index < score){
-        $(this).addClass('fa-star').removeClass('fa-star-o')
-      } else {
-        $(this).removeClass('fa-star-o').addClass('fa-star-o')
-      }
-    });
+requests.addStars = function(){
+  var score      = $("#leaderboard .stars")
+  score.empty()
+  for(var i=0;i<score.length;i++){
+    var scoreLength = $(score[i]).attr('score')
+    console.log(scoreLength)
+    for(var j=0;j<scoreLength;j++){
+      $(score[i]).append("<i class='fa fa-star'></i>")
+    }
+  }
+  // childs.each(function(index) {
+  //     if(index < score){
+  //       $(this).addClass('fa-star').removeClass('fa-star-o')
+  //     } else {
+  //       $(this).removeClass('fa-star-o').addClass('fa-star-o')
+  //     }
+  //   });
 }
 
 
 requests.appendProgrammes = function(data, div){
   var i = 0;
+  var j = 0;
   for(i;i<data.length;i++){
     $(div).append(
       "<div class='col s4'>" +
@@ -69,9 +78,10 @@ requests.appendProgrammes = function(data, div){
       "<img class='activator' src='http://www.wired.com/wp-content/uploads/2014/04/Fargo.jpg'>" +
       "</div>" +
       "<div class='card-content'>" +
-      "<span class='card-title activator grey-text text-darken-4'>" + data[i].name + 
-      data[i].avarageRating + "</span>" +
-      "<div class='stars' data-id='" +
+      "<span class='card-title activator grey-text text-darken-4'>" + 
+      data[i].name + 
+      "</span>" +
+      "<div class='stars' score='" + data[i].avarageRating + "' data-id='" +
       data[i]._id +
       "'>" +
       "<i class='fa fa-star-o'></i>" +
@@ -83,9 +93,10 @@ requests.appendProgrammes = function(data, div){
       "</div>" +
       "</div>" +
       "</div>"
-      )
+      );
   };
 
+  requests.addStars()
 
   $(".stars i").on("click", function(){
     var indexScore  = $(this).index()
@@ -131,3 +142,10 @@ requests.readXml = function(event){
 
 requests.getReq("api/programmes");
 document.getElementById("selectfile").addEventListener("change", requests.readXml, false)
+
+
+// "<i class='fa fa-star-o'></i>" +
+// "<i class='fa fa-star-o'></i>" +
+// "<i class='fa fa-star-o'></i>" +
+// "<i class='fa fa-star-o'></i>" +
+// "<i class='fa fa-star-o'></i>" +
