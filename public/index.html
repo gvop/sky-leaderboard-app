@@ -11,23 +11,25 @@
   <div class="clear-background">
     <div class="container row">
       <div class="col s3">
-        <img src="http://assets.sky.com/dist/1276/static/sky-logo-redesign.png">
+        <img id="logo" src="http://assets.sky.com/dist/1276/static/sky-logo-redesign.png">
       </div>
       <div class="col s9">
         <h1>Sky Content Ranking</h1>
         <ul class="nav">
-          <li>Rate our content</li>
-          <li>Content Leaderboard</li>
-          <li>Upload</li>
+          <li id="rate">Rate our content</li>
+          <li id="content">Content Leaderboard</li>
+          <li id="upload">Upload</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <div id="rating_page"class="container">
+  <div id="upload_page"class="container">
     <input type="file" id="selectfile" />
-    <div class="row" id="programmes">
-    </div>
+  </div>
+
+  <div id="rating_page"class="container">
+    <div class="row" id="programmes"></div>
   </div>
 
   <div id="leaderboard_page"class="container">
@@ -37,7 +39,7 @@
   </div>
   
 </body>
+
 <script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/rating.js"></script>
 <script type="text/javascript" src="js/events.js"></script>
 </html>

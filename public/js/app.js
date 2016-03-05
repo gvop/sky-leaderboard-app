@@ -1,12 +1,7 @@
-// $(init)
-
-// function init(){
-//   $("#leaderboard_page").hide()
-// }
-
 var rating = {
   programmes : []
 }
+
 rating.getScore = function(score, id){
   console.log(score + " stars have gave")
   var url = "/api/programmes/" + id;
@@ -14,15 +9,12 @@ rating.getScore = function(score, id){
 }
 
 var requests = {}
-
 requests.getReq = function(url){
   $.get( url, function( data ) {
     requests.appendProgrammes(data.programmes, "#programmes")
     requests.sortData(data.programmes)
   });
 };
-
-
 
 requests.ajaxReq = function(method,url,data){
   $.ajax({
@@ -42,7 +34,7 @@ requests.sortData = function(data){
     if (a.avarageRating < b.avarageRating) {
       return 1;
     }
-  return 0;
+    return 0;
   });
   return requests.appendProgrammes(sorted, "#leaderboard")
 }
@@ -52,22 +44,14 @@ requests.addStars = function(){
   score.empty()
   for(var i=0;i<score.length;i++){
     var scoreLength = $(score[i]).attr('score')
-    console.log(scoreLength)
     for(var j=0;j<scoreLength;j++){
       $(score[i]).append("<i class='fa fa-star'></i>")
     }
   }
-  // childs.each(function(index) {
-  //     if(index < score){
-  //       $(this).addClass('fa-star').removeClass('fa-star-o')
-  //     } else {
-  //       $(this).removeClass('fa-star-o').addClass('fa-star-o')
-  //     }
-  //   });
 }
 
-
 requests.appendProgrammes = function(data, div){
+  $(div).empty();
   var i = 0;
   var j = 0;
   for(i;i<data.length;i++){
@@ -135,8 +119,15 @@ requests.readXml = function(event){
     };
     requests.ajaxReq("POST", "/api/programmes/", data)
     requests.appendProgrammes(data)
+    requests.getReq("api/programmes");
   };
   reader.readAsText(files[0]);
+  $("#rating_page").show()
+  $("#rate").addClass("bold")
+  $("#content").removeClass("bold")
+  $("#upload").removeClass("bold")
+  $("#upload_page").hide()
+  $("#leaderboard_page").hide()
   $("#selectfile").val('');
 };
 
@@ -144,8 +135,4 @@ requests.getReq("api/programmes");
 document.getElementById("selectfile").addEventListener("change", requests.readXml, false)
 
 
-// "<i class='fa fa-star-o'></i>" +
-// "<i class='fa fa-star-o'></i>" +
-// "<i class='fa fa-star-o'></i>" +
-// "<i class='fa fa-star-o'></i>" +
-// "<i class='fa fa-star-o'></i>" +
+

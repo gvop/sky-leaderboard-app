@@ -15,6 +15,7 @@ body {
 /*Navigation*/
 .nav li {
   display: inline-block;
+  margin: 0 15px 0 0;
 }
 
 /*Stars*/
@@ -23,10 +24,18 @@ body {
   padding: 0 .3rem 0 0;
 }
 
+.bold{
+  font-weight: bold;
+}
+
 /*Typo*/
+#logo{
+  margin: .5rem 0 0 0;
+}
 
 h1{
-  margin: 0;
+  margin: .5rem 0 0 0;
+  font-size: 2.5rem;
 }
 
 .clear-background{
