@@ -124,7 +124,7 @@ requests.appendProgrammes = function(data, div){
 };
 
 requests.dealWithRating = function(){
-  $(".stars i").unbind("click").on("click", function(){
+  $("#programmes .stars i").unbind("click").on("click", function(){
     console.log("Click")
     var indexScore  = $(this).index()
     var parent      = $(this).parent()
