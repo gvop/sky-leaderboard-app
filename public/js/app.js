@@ -2,12 +2,13 @@ var rating = {
   programmes : []
 }
 
+//Send score
 rating.getScore = function(score, id){
-  console.log(score + " stars have gave")
   var url = "/api/programmes/" + id;
   requests.ajaxReq("PUT", url, score )
 }
 
+//Get request
 var requests = {}
 requests.getReq = function(url){
   $.get( url, function( data ) {
@@ -16,6 +17,8 @@ requests.getReq = function(url){
   });
 };
 
+
+//General Ajax Call
 requests.ajaxReq = function(method,url,data){
   $.ajax({
     type: method,
@@ -26,6 +29,7 @@ requests.ajaxReq = function(method,url,data){
   });
 };
 
+//Sort highests ranked
 requests.sortData = function(data){
   var sorted = data.sort(function (a, b) {
     if (a.avarageRating > b.avarageRating) {
@@ -39,6 +43,7 @@ requests.sortData = function(data){
   return requests.appendProgrammes(sorted, "#leaderboard")
 }
 
+//Add stars on leaderboard
 requests.addStars = function(){
   var score      = $("#leaderboard .stars")
   score.empty()
@@ -50,20 +55,26 @@ requests.addStars = function(){
   }
 }
 
+//Add programmes after XML upload
 requests.appendProgrammes = function(data, div){
   $(div).empty();
   var i = 0;
   var j = 0;
   for(i;i<data.length;i++){
+    var votes = 0;
+    if(data[i].rating) votes = data[i].rating.length;
     $(div).append(
       "<div class='col s4'>" +
       "<div class='card'>" +
       "<div class='card-image waves-effect waves-block waves-light'>" +
-      "<img class='activator' src='http://www.wired.com/wp-content/uploads/2014/04/Fargo.jpg'>" +
+      "<img class='activator' src='"+ data[i].imagePath + "'>" +
       "</div>" +
       "<div class='card-content'>" +
       "<span class='card-title activator grey-text text-darken-4'>" + 
       data[i].name + 
+      "<i class='total-votes'> total votes: " + 
+      votes +
+      "</i>" + 
       "</span>" +
       "<div class='stars' score='" + data[i].avarageRating + "' data-id='" +
       data[i]._id +
@@ -71,7 +82,7 @@ requests.appendProgrammes = function(data, div){
       "<i class='fa fa-star-o'></i>" +
       "<i class='fa fa-star-o'></i>" +
       "<i class='fa fa-star-o'></i>" +
-      "<i class='fa fa-star-o'></i>" +
+      "<i class='fa fa-star-o'></i>" + 
       "<i class='fa fa-star-o'></i>" +
       "</div>" +
       "</div>" +
@@ -79,15 +90,22 @@ requests.appendProgrammes = function(data, div){
       "</div>"
       );
   };
-
   requests.addStars()
+  requests.dealWithRating()
+};
 
-  $(".stars i").on("click", function(){
+requests.dealWithRating = function(){
+  $(".stars i").unbind("click").on("click", function(){
+    console.log("Click")
     var indexScore  = $(this).index()
     var parent      = $(this).parent()
     var programmeId = parent.attr('data-id')
     var childs      = parent.children()
     var score       = (indexScore + 1)
+    var singleScore = parent.parent().find('.total-votes')
+    var votesText   = singleScore.text()
+    var scoreNumber = parseInt(votesText[votesText.length -1])
+    singleScore.html("total votes: " + (scoreNumber + 1))
 
     childs.each(function(index) {
       if(index < score){
@@ -98,9 +116,9 @@ requests.appendProgrammes = function(data, div){
     });
     rating.getScore(score, programmeId)
   })
-};
+}
 
-
+//Read uploaded XML file
 requests.readXml = function(event){
   var i = 0;
   var data = [];

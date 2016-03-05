@@ -24,6 +24,14 @@ body {
   padding: 0 .3rem 0 0;
 }
 
+.total-votes{
+  float: right;
+  font-size: 14px;
+  position: relative;
+  top: -25px;
+  right: -5px;
+}
+
 .bold{
   font-weight: bold;
 }
@@ -43,7 +51,7 @@ h1{
 }
 
 .card .card-title {
-    font-size: 21px;
+    font-size: 19px;
     font-weight: 300;
 }
 

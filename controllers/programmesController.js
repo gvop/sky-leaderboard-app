@@ -1,5 +1,4 @@
 var Programme   = require('../models/programme');
-var multer      = require('multer');
 
 function programmeAdd(req, res){
   var data = req.body.data
