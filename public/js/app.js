@@ -1,4 +1,12 @@
-var rating = {}
+// $(init)
+
+// function init(){
+//   $("#leaderboard_page").hide()
+// }
+
+var rating = {
+  programmes : []
+}
 rating.getScore = function(score, id){
   console.log(score + " stars have gave")
   var url = "/api/programmes/" + id;
@@ -9,9 +17,12 @@ var requests = {}
 
 requests.getReq = function(url){
   $.get( url, function( data ) {
-    requests.appendProgrammes(data.programmes)
+    requests.appendProgrammes(data.programmes, "#programmes")
+    requests.sortData(data.programmes)
   });
 };
+
+
 
 requests.ajaxReq = function(method,url,data){
   $.ajax({
@@ -23,17 +34,43 @@ requests.ajaxReq = function(method,url,data){
   });
 };
 
-requests.appendProgrammes = function(data){
+requests.sortData = function(data){
+  var sorted = data.sort(function (a, b) {
+    if (a.avarageRating > b.avarageRating) {
+      return -1;
+    }
+    if (a.avarageRating < b.avarageRating) {
+      return 1;
+    }
+  return 0;
+  });
+  return requests.appendProgrammes(sorted, "#leaderboard")
+}
+
+requests.addStars = function(score){
+  var childs      = $('.stars').children()
+  childs.each(function(index) {
+      if(index < score){
+        $(this).addClass('fa-star').removeClass('fa-star-o')
+      } else {
+        $(this).removeClass('fa-star-o').addClass('fa-star-o')
+      }
+    });
+}
+
+
+requests.appendProgrammes = function(data, div){
   var i = 0;
   for(i;i<data.length;i++){
-    $('#programmes').append(
+    $(div).append(
       "<div class='col s4'>" +
       "<div class='card'>" +
       "<div class='card-image waves-effect waves-block waves-light'>" +
       "<img class='activator' src='http://www.wired.com/wp-content/uploads/2014/04/Fargo.jpg'>" +
       "</div>" +
       "<div class='card-content'>" +
-      "<span class='card-title activator grey-text text-darken-4'>" + data[i].name + "</span>" +
+      "<span class='card-title activator grey-text text-darken-4'>" + data[i].name + 
+      data[i].avarageRating + "</span>" +
       "<div class='stars' data-id='" +
       data[i]._id +
       "'>" +
@@ -48,6 +85,8 @@ requests.appendProgrammes = function(data){
       "</div>"
       )
   };
+
+
   $(".stars i").on("click", function(){
     var indexScore  = $(this).index()
     var parent      = $(this).parent()
@@ -56,11 +95,11 @@ requests.appendProgrammes = function(data){
     var score       = (indexScore + 1)
 
     childs.each(function(index) {
-        if(index < score){
-          $(this).addClass('fa-star').removeClass('fa-star-o')
-        } else {
-          $(this).removeClass('fa-star-o').addClass('fa-star-o')
-        }
+      if(index < score){
+        $(this).addClass('fa-star').removeClass('fa-star-o')
+      } else {
+        $(this).removeClass('fa-star-o').addClass('fa-star-o')
+      }
     });
     rating.getScore(score, programmeId)
   })

@@ -22,26 +22,42 @@ function programmesIndex(req, res){
 
 function addRating(req,res ){
   var score = parseInt(req.body.data)
+  console.log(score)
   var data = {
-    comment   : score,
+    score     : parseInt(score),
     timeStamp : new Date()
   }
 
   Programme.findById(req.params.id,  function(err, programme) {
     programme.rating.push(data)
     programme.save(function(data){
-      console.log(programme)
+      avarageRating(programme)
       res.status(200).json({message: "You've added a comment!"});
     });
   });
 };
 
-function averageCalculation(){
-  console.log("averageCalc")
+function avarageRating(rattingArray){
+  var id = rattingArray._id 
+  console.log(id)
+  var i = 0;
+  var score = 0;
+  for(i;i<rattingArray.rating.length;i++){
+    console.log(rattingArray.rating[i].score)
+    score += rattingArray.rating[i].score
+  }
+  var avarage = score / rattingArray.rating.length
+  updateAvarage(id,(Math.round(avarage)))
+};
+
+function updateAvarage(id,avarage){
+  Programme.findById(id,  function(err, programme) {
+    programme.avarageRating = avarage
+    programme.save(function(data){
+      console.log("Avarage added")
+    });
+  });
 }
-
-
-
 
 
 module.exports = { 
@@ -49,3 +65,6 @@ module.exports = {
   programmeAdd    : programmeAdd,
   addRating       : addRating
 }
+
+
+
