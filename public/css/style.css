@@ -12,6 +12,10 @@ body {
   background-attachment: fixed;
 }
 
+#upload_page{
+  height: 800px;
+}
+
 /*Navigation*/
 .nav li {
   display: inline-block;
@@ -28,6 +32,9 @@ body {
   text-align: right;
 }
 
+footer{
+  padding: 2rem 0;
+}
 .gray {
   color: #ededff;
 }
@@ -68,7 +75,12 @@ h1{
     font-weight: 300;
 }
 
+.waves-effect{
+  cursor: default;
+}
+
 .card{
+  cursor: default;
   box-shadow: 0 0 0 0;
   transition: box-shadow .5s ease;
 }

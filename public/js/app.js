@@ -8,11 +8,33 @@ rating.getScore = function(score, id){
   requests.ajaxReq("PUT", url, score )
 }
 
+var requests = {
+  xmlData   : false
+}
+
+//Page load 
+requests.pageStart = function(div){
+  var i = 0;
+  for(i;i<10;i++){
+    $(div).append(
+      "<div class='col l4 m6 s12'>" +
+      "<div class='card'>" +
+      "<div class='card-image waves-effect waves-block waves-light'>" +
+      "<img class='activator' src='images/no_content.jpg'>" +
+      "</div>" +
+      "<div class='card-content'>" +
+      "<span class='card-title activator grey-text text-darken-4'>No content</span>" +
+      "</div>" +
+      "</div>" +
+      "</div>"
+    );
+  };
+};
+
 //Get request
-var requests = {}
 requests.getReq = function(url){
   $.get( url, function( data ) {
-    requests.appendProgrammes(data.programmes, "#programmes")
+    requests.appendProgrammes(data.programmes, "#leaderboard")
     requests.sortData(data.programmes)
   });
 };
@@ -31,16 +53,16 @@ requests.ajaxReq = function(method,url,data){
 
 //Sort highests ranked
 requests.sortData = function(data){
-  // var sorted = data.sort(function (a, b) {
-  //   if (a.avarageRating > b.avarageRating) {
-  //     return -1;
-  //   }
-  //   if (a.avarageRating < b.avarageRating) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // });
-  return requests.appendProgrammes(data, "#leaderboard")
+  var sorted = data.sort(function (a, b) {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    return 0;
+  });
+  return requests.appendProgrammes(sorted, "#programmes")
 }
 
 //Add stars on leaderboard
@@ -152,9 +174,11 @@ requests.readXml = function(event){
   $("#upload_page").hide()
   $("#leaderboard_page").hide()
   $("#selectfile").val('');
+  requests.xmlData = true;
+  requests.getReq("api/programmes");
 };
 
-requests.getReq("api/programmes");
+
 document.getElementById("selectfile").addEventListener("change", requests.readXml, false)
 
 

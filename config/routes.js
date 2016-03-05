@@ -6,6 +6,7 @@ var programmesController = require('../controllers/programmesController');
 router.route('/api/programmes/')
   .post(programmesController.programmeAdd)
   .get(programmesController.programmesIndex)
+  .delete(programmesController.deleteData)
 
 router.route('/api/programmes/:id')
   .put(programmesController.addRating)

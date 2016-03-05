@@ -42,6 +42,10 @@ function addRating(req,res ){
   });
 };
 
+function deleteData(){
+  Programme.collection.drop()
+}
+
 function avarageRating(rattingArray){
   var id = rattingArray._id 
   console.log(id)
@@ -67,7 +71,8 @@ function updateAvarage(id,avarage){
 module.exports = { 
   programmesIndex : programmesIndex,
   programmeAdd    : programmeAdd,
-  addRating       : addRating
+  addRating       : addRating,
+  deleteData      : deleteData
 }
 
 
