@@ -27,15 +27,17 @@ requests.pageStart = function(div){
       "</div>" +
       "</div>" +
       "</div>"
-    );
+      );
   };
 };
 
 //Get request
 requests.getReq = function(url){
   $.get( url, function( data ) {
+    if(data.programmes.length > 0){
     requests.appendProgrammes(data.programmes, "#leaderboard")
     requests.sortData(data.programmes)
+  }
   });
 };
 
@@ -174,11 +176,16 @@ requests.readXml = function(event){
   $("#upload_page").hide()
   $("#leaderboard_page").hide()
   $("#selectfile").val('');
-  requests.xmlData = true;
-  requests.getReq("api/programmes");
+  
 };
-
-
+requests.startUp = function(){
+  requests.getReq("api/programmes");
+  if($('#programmes').children().length < 1){
+    requests.pageStart($('#programmes'))
+    requests.pageStart($('#leaderboard'))
+  } 
+}
+requests.startUp()
 document.getElementById("selectfile").addEventListener("change", requests.readXml, false)
 
 

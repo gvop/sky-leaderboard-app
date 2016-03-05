@@ -1,11 +1,9 @@
 $(init)
 function init(){
-  requests.pageStart($('#programmes'))
-  requests.pageStart($('#leaderboard'))
   var rating      = $("#rating_page")
   var upload      = $("#upload_page")
   var leaderboard = $("#leaderboard_page")
-
+  
   $("#rate").addClass("bold")
   rating.show()
   upload.hide()
@@ -27,7 +25,7 @@ function init(){
     leaderboard.hide()
     upload.hide()
     rating.show()
-    if(requests.xmlData) requests.getReq("api/programmes");
+    requests.getReq("api/programmes");
   })
 
   $("#content").on("click", function(){
@@ -37,7 +35,7 @@ function init(){
     rating.hide()
     upload.hide()
     leaderboard.show()
-    if(requests.xmlData) requests.getReq("api/programmes");
+    requests.getReq("api/programmes");
   })
 
   $("#upload").on("click", function(){
@@ -51,3 +49,9 @@ function init(){
   })
 }
 
+function xmlDataCheck(){
+  if(!requests.xmlData){
+    requests.pageStart($('#programmes'))
+    requests.pageStart($('#leaderboard'))
+  }
+}
