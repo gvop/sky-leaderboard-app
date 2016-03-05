@@ -31,16 +31,16 @@ requests.ajaxReq = function(method,url,data){
 
 //Sort highests ranked
 requests.sortData = function(data){
-  var sorted = data.sort(function (a, b) {
-    if (a.avarageRating > b.avarageRating) {
-      return -1;
-    }
-    if (a.avarageRating < b.avarageRating) {
-      return 1;
-    }
-    return 0;
-  });
-  return requests.appendProgrammes(sorted, "#leaderboard")
+  // var sorted = data.sort(function (a, b) {
+  //   if (a.avarageRating > b.avarageRating) {
+  //     return -1;
+  //   }
+  //   if (a.avarageRating < b.avarageRating) {
+  //     return 1;
+  //   }
+  //   return 0;
+  // });
+  return requests.appendProgrammes(data, "#leaderboard")
 }
 
 //Add stars on leaderboard
@@ -49,6 +49,11 @@ requests.addStars = function(){
   score.empty()
   for(var i=0;i<score.length;i++){
     var scoreLength = $(score[i]).attr('score')
+    if(scoreLength == 0) {
+      for(var j=0;j<5;j++){
+        $(score[i]).append("<i class='fa fa-star-o gray'></i>")
+      }
+    }
     for(var j=0;j<scoreLength;j++){
       $(score[i]).append("<i class='fa fa-star'></i>")
     }
@@ -64,7 +69,7 @@ requests.appendProgrammes = function(data, div){
     var votes = 0;
     if(data[i].rating) votes = data[i].rating.length;
     $(div).append(
-      "<div class='col s4'>" +
+      "<div class='col l4 m6 s12'>" +
       "<div class='card'>" +
       "<div class='card-image waves-effect waves-block waves-light'>" +
       "<img class='activator' src='"+ data[i].imagePath + "'>" +

@@ -2,7 +2,10 @@ var Programme   = require('../models/programme');
 
 function programmeAdd(req, res){
   var data = req.body.data
-  console.log(req.body.data)
+  for(var i=0;i<req.body.data.length;i++){
+    data[i].avarageRating = 0;
+    data[i].ratingLength  = 0;
+  }
   var i=0;
   for(i;i<data.length;i++){
     var programme = new Programme(data[i]);
@@ -13,7 +16,7 @@ function programmeAdd(req, res){
 };
 
 function programmesIndex(req, res){
-  Programme.find({}, function(err, programmes){
+  Programme.find().sort({avarageRating : -1, ratingLength : -1  }).find(function(err, programmes){
     if (err) return res.render("error", { message: "Something went wrong. " + err });
     res.json({ programmes: programmes });
   });
@@ -29,6 +32,8 @@ function addRating(req,res ){
   }
 
   Programme.findById(req.params.id,  function(err, programme) {
+    var length = (programme.rating.length + 1)
+    programme.ratingLength = parseInt(length)
     programme.rating.push(data)
     programme.save(function(data){
       avarageRating(programme)
@@ -43,7 +48,6 @@ function avarageRating(rattingArray){
   var i = 0;
   var score = 0;
   for(i;i<rattingArray.rating.length;i++){
-    console.log(rattingArray.rating[i].score)
     score += rattingArray.rating[i].score
   }
   var avarage = score / rattingArray.rating.length

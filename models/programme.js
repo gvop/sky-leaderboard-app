@@ -6,6 +6,7 @@ var programmeSchema   = mongoose.Schema({
   name:String,
   imagePath: String,
   rating: [Rating.schema],
+  ratingLength: Number,
   avarageRating: Number
 });
 

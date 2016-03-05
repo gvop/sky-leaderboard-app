@@ -15,13 +15,21 @@ body {
 /*Navigation*/
 .nav li {
   display: inline-block;
-  margin: 0 15px 0 0;
+  margin: 0 0 0 15px;
 }
 
 /*Stars*/
 .stars > i {
   cursor: pointer;
   padding: 0 .3rem 0 0;
+}
+
+.text-right{
+  text-align: right;
+}
+
+.gray {
+  color: #ededff;
 }
 
 .total-votes{
@@ -48,6 +56,11 @@ h1{
 
 .clear-background{
   background: white;
+}
+
+.card-title{
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card .card-title {
