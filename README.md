@@ -14,4 +14,5 @@ I have deployed a fully functional website on Heroku.
 
 [Sky Rating App](https://limitless-sea-83322.herokuapp.com/)
 
+Test content for this application is the programmes.xml file, in the main folder of this project
 
